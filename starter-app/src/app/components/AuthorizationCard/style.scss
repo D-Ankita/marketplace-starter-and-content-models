@@ -1,0 +1,90 @@
+.Authorization-Card {
+  .Authorization-Accordion {
+    height: auto;
+
+    .Authorization-error-details {
+      background-color: #ffeeeb;
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      padding: 30px;
+
+      .Authorization-error-fix {
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+
+        p {
+          line-height: 26px;
+          color: #222222;
+        }
+      }
+    }
+
+    .Authorization-error-info {
+      font-size: 13px;
+      line-height: 155%;
+      letter-spacing: 0.01em;
+      align-items: center;
+      margin: 20px;
+
+      p {
+        color: #222222;
+
+        a {
+          text-decoration: none;
+        }
+      }
+    }
+
+    .Authorization-error {
+      font-weight: bold;
+      font-size: 13px;
+      line-height: 155%;
+      display: flex;
+      align-items: center;
+      margin: 20px 20px 5px;
+      color: #a9b6cb;
+    }
+
+    .Authorization-error-code {
+      margin: 0 20px;
+      font-family: IBM Plex Mono, serif;
+      word-wrap: break-word;
+      line-height: normal;
+
+      .error-wrapper {
+        position: relative;
+
+        .error {
+          background: #475161;
+          border-radius: 8px;
+          font-family: IBM Plex Mono, 'sans-serif';
+          font-size: 13px;
+          padding: 18px 40px 16px 15px;
+          color: #f1f4fe;
+          position: relative;
+          height: 100%;
+          max-width: 676px;
+        }
+
+        .copyError {
+          position: absolute;
+          top: 15px;
+          right: 15px;
+          z-index: 1;
+        }
+      }
+    }
+  }
+
+  .OAuth_Consent_Card {
+    overflow-y: auto;
+    height: auto;
+    max-height: 34rem;
+  }
+
+  .Authorizations-card-footer {
+    flex-direction: unset;
+  }
+}

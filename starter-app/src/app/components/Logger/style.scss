@@ -1,0 +1,54 @@
+.log-wrapper {
+  height: 270px;
+  margin: 15px 10px 15px 0px;
+  width: 42.5rem;
+  position: relative;
+  background: #475161;
+  border-radius: 8px;
+
+  .logs {
+    background: #475161;
+    border-radius: 8px;
+    font-family: IBM Plex Mono, sans-serif;
+    padding: 15px 40px 15px 15px;
+    color: #f1f4fe;
+    position: relative;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    max-width: 676px;
+
+    .logsRow {
+      span::selection {
+        background: #ffffff;
+      }
+
+      .logsRowMsg {
+        line-height: 1.3;
+
+        &.blueText {
+          color: #88ffea;
+        }
+      }
+    }
+  }
+
+  .copyLogs {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    z-index: 1;
+  }
+
+  .log-row-error {
+    color: #ffa39b;
+  }
+
+  .log-row-info {
+    color: #3fe181;
+  }
+
+  .log-row-warning {
+    color: #fcbc05;
+  }
+}

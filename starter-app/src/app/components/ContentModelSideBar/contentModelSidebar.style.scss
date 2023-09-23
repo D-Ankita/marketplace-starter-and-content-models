@@ -1,0 +1,121 @@
+.sidebar-wrapper {
+  padding-top: 5px;
+  .image-card {
+    border-radius: 10px;
+    border: 1px solid #f5f5f5;
+    .image {
+      padding-bottom: 20px;
+
+      img {
+        border-radius: 10px 10px 0px 0px;
+        width: 100%;
+      }
+    }
+
+    .logo {
+      width: 1.5rem;
+      margin-left: 1.25rem;
+
+    }
+
+    .description {
+      padding: 10px 20px 20px;;
+
+      h6 {
+        font-weight: 700;
+        font-size: 1.125rem;
+        letter-spacing: -0.00019em;
+        line-height: 135%;
+      }
+
+      p {
+        padding: 10px 0;
+        line-height: 1.2;
+      }
+    }
+
+  }
+
+  .category-tags {
+    margin-left: -2px;
+  }
+
+  .Tag {
+    min-height: auto;
+    padding: 0;
+  }
+  .Tag:hover {
+    background-color: transparent;
+  }
+
+  .Tag .Tag__item--disabled .Tag__item {
+    span {
+      margin: 0;
+      height: auto;
+      padding: 0.063rem 0.15rem;
+    }
+  }
+
+  .info {
+    padding: 20px 0;
+    .InfoContainer .InfoRow .InfoRowTitle {
+      font-weight: 700;
+      color: #647696;
+      letter-spacing: 0.01em;
+      font-size: 12px;
+      margin-bottom: 0;
+    }
+    .InfoContainer .InfoRow .InfoRowContent .build-description {
+      padding: 10px 0;
+    }
+    .external-links {
+      .sub-heading {
+        color: #647696;
+        font-weight: 400;
+        font-size: 13px;
+        line-height: 155%;
+        display: block;
+        padding: 10px 0;
+      }
+      ul {
+        list-style: disc;
+        padding: 0 17px;
+        li {
+          line-height: 130%;
+          a {
+            font-weight: 400;
+            color: #222222;
+            font-size: 12px;
+          }
+          :hover {
+            color: #6c5ce7;
+          }
+        }
+      }
+    }
+
+    .InfoRowContent span {
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+  }
+}
+
+.build-description {
+  img {
+    width: 16px;
+    margin-right: 6px;
+  }
+}
+
+.PageLayout__leftSidebar::-webkit-scrollbar {
+  width: 0.5px;
+}
+
+.build-links {
+  color: #222222;
+  text-decoration: none;
+  :hover {
+    color: #6c5ce7;
+  }
+}

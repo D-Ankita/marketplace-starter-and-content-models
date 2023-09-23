@@ -1,0 +1,24 @@
+.UnauthorizedCard {
+  background-color: #ffeeeb;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 40px;
+  flex-direction: column;
+  padding-bottom: 20px;
+
+  .ErrorMessage {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 150%;
+    margin-top: 1rem;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.01em;
+
+    span {
+      font-weight: 600;
+    }
+  }
+}

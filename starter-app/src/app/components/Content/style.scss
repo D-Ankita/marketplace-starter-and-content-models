@@ -1,0 +1,470 @@
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 30px;
+  flex-direction: column;
+
+  .step__title {
+    display: none;
+  }
+
+  .StepperWrapper__step {
+    width: 100%;
+  }
+
+  .StepperWrapper ol.Vertical > li {
+    margin-top: -5px;
+  }
+
+  .StepperWrapper ol.Vertical > li:before {
+    width: 1.75rem;
+    height: 1.75rem;
+    left: -15px;
+    top: 5px;
+    z-index: 100;
+  }
+
+  .step {
+    position: relative;
+    min-height: 1em;
+    color: #a9b6cb;
+
+    & > div:first-child {
+      position: static;
+      height: 0;
+    }
+
+    & > div:not(:first-child) {
+      margin-left: 1.5em;
+      padding-left: 1em;
+    }
+
+    &::after {
+      border-left: 2px solid #a9b6cb;
+      content: "";
+      position: absolute;
+      height: calc(100% + 20px);
+      top: 0px;
+      z-index: 1;
+    }
+
+    &:last-child {
+      &::after {
+        border-left: none;
+      }
+    }
+
+    .circle {
+      background: #647696;
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      position: relative;
+      width: 1.5em;
+      height: 1.5em;
+      line-height: 1.5em;
+      border-radius: 100%;
+      color: #fff;
+      text-align: center;
+      z-index: 2;
+    }
+
+    h5 {
+      font-weight: 700;
+    }
+
+    p {
+      padding-bottom: 20px;
+      line-height: 2;
+      font-size: 13px;
+    }
+
+    .ext-link {
+      a {
+        color: #6c5ce7;
+      }
+      svg {
+        margin-left: 10px;
+
+        path {
+          &:last-child {
+            fill: #6c5ce7;
+          }
+        }
+      }
+    }
+
+    .form {
+      border-radius: 10px;
+      background: #ffff;
+      margin-bottom: 20px;
+
+      .input-form-diabled {
+        opacity: 0.5;
+      }
+
+      .form-wrapper {
+        padding: 30px 0 0;
+
+        .Field {
+          padding: 0 20px;
+        }
+        .Radio-wrapper {
+          margin: 10px 0;
+
+          .Radio:last-of-type {
+            margin-left: 2.5rem;
+          }
+        }
+      }
+
+      .right {
+        display: flex;
+        flex-flow: row-reverse;
+
+        button {
+          margin: 14px 10px 14px;
+          padding-bottom: revert;
+          padding-top: revert;
+        }
+
+        .Button {
+          svg path {
+            fill: white;
+            stroke-width: 0;
+          }
+        }
+      }
+
+      .in-progress {
+        color: #ffae0a;
+        border: 1px solid #ffae0a;
+      }
+
+      .external-links {
+        padding: 14.5px;
+      }
+
+      .right.colored {
+        .Button {
+          .stack-link {
+            path {
+              stroke: #fff;
+              &:last-child {
+                fill: #fff;
+              }
+            }
+          }
+          .external-Links-1 {
+            margin: 0 5px;
+            path {
+              stroke: #6c5ce7;
+              &:last-child {
+                fill: #6c5ce7;
+              }
+            }
+          }
+          .external-Links-2 {
+            margin: 0 5px;
+            path {
+              stroke: #647696;
+              &:last-child {
+                fill: #647696;
+              }
+            }
+          }
+        }
+      }
+
+      .Info {
+        background: #f7f9fc;
+        padding: 0;
+
+        .Info__icon {
+          padding: 0.8rem;
+          margin: -1px;
+        }
+        .Info__content {
+          color: #475161;
+          line-height: 1.5 !important;
+          padding: 8px;
+          p {
+            padding: 0;
+          }
+        }
+      }
+
+      .info {
+        padding: 20px;
+
+        .InfoContainer {
+          padding: 0;
+
+          .InfoRow {
+            margin-bottom: 1.875rem;
+
+            .InfoRowTitle {
+              color: #647696;
+              font-weight: bold;
+            }
+
+            .InfoRowContent {
+              color: #475161;
+
+              .tippy-wrapper {
+                width: 2rem !important;
+              }
+            }
+          }
+        }
+      }
+
+      .head {
+        display: flex;
+        padding: 20px;
+        align-items: center;
+
+        h6 {
+          margin-left: 10px;
+        }
+      }
+
+      .form-content {
+        padding: 20px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+
+        #launchBtn {
+          path {
+            stroke: none !important;
+            fill: #fff !important;
+          }
+        }
+
+        .deployBtns {
+          margin: 20px 10px 20px 10px;
+        }
+
+        .Button {
+          svg {
+            path {
+              stroke: #6c5ce7;
+              &:last-child {
+                fill: #6c5ce7;
+              }
+            }
+          }
+        }
+
+        .Button--state-disabled {
+          border: none;
+          svg {
+            path {
+              stroke: #a9b6cb;
+              fill: none !important;
+            }
+          }
+        }
+
+        p {
+          padding: 0;
+        }
+      }
+    }
+
+    .log-section {
+      .Info {
+        .Info__icon {
+          padding: 1.4rem 0.8rem;
+          margin: -1px;
+          background-color: #a9b6cb;
+        }
+      }
+    }
+  }
+
+  .step + .step {
+    margin-top: 1em;
+  }
+
+  .step.step-active .circle {
+    background-color: #6c5ce7;
+  }
+
+  .step.step-active {
+    .form {
+      filter: drop-shadow(0px 8px 20px #2222221a);
+    }
+  }
+
+  .step.step-active::after {
+    border-left: 1px solid #6c5ce7;
+  }
+
+  .step.step-active:last-child::after {
+    border-left: none;
+  }
+
+  .step.step-active.step-complete .circle {
+    background-color: #f5fffc;
+    border: 0.5px solid #007a52;
+    color: #007a52;
+  }
+
+  .step.step-active.step-complete::after {
+    border-image: linear-gradient(270deg, #6c5ce7 0%, #007a52 100%);
+    border-image-slice: 1;
+  }
+
+  .step.step-active.step-complete {
+    .form {
+      filter: none;
+    }
+  }
+}
+
+.deployStatus {
+  img {
+    position: relative;
+    right: 16px;
+    width: 16px;
+    margin: -9px;
+  }
+}
+
+.copy-links {
+  margin-left: 4px;
+  transform: translate(10px, 1px);
+  width: 10.5px !important;
+  height: 12px !important;
+  :hover {
+    cursor: pointer;
+  }
+}
+
+.Accordion__open {
+  .InfoContainer {
+    margin-left: 15.5px;
+  }
+}
+.accordion-links {
+  color: #647696;
+}
+.accordion-links:hover {
+  cursor: pointer;
+  color: #6c5ce7;
+}
+
+#import-stack .step__content .StepperWrapper__step .Accordion .Accordion__open .Accordion__data {
+  border-left: none !important;
+}
+
+#import-stack,
+#deploy,
+#successful-deployment {
+  .Line--Dashed {
+    border-top: none !important;
+  }
+  .Accordion__data {
+    border-left: none !important;
+  }
+}
+
+.starter-intro {
+  p {
+    padding-top: 10px;
+  }
+}
+
+.import-stack-stepper,
+.deploy-vercel-stepper,
+.deployed-links-stepper {
+  .Accordion__heading {
+    padding: 0 !important;
+  }
+}
+
+.import-stack-stepper,
+.import-stack-stepper,
+.deploy-vercel-stepper,
+.deployed-links-stepper {
+  .Accordion__open {
+    margin: 0 !important;
+  }
+}
+
+//Venus Components Overwritten CSS
+
+#tippy-1 {
+  margin-right: 13px !important;
+  margin-top: 7px !important;
+}
+
+.flex-h-center {
+  height: auto;
+  padding: 5px;
+}
+
+.truncate-text {
+  min-width: 16rem;
+}
+
+.deployForm {
+  padding: 0px 10px 0px 10px !important;
+}
+
+.right .flex-v-center {
+  align-items: center !important;
+}
+
+.tippy-arrow-light-right {
+  top: 21px;
+}
+
+.starterDeployed {
+  justify-content: flex-start !important;
+
+  p {
+    margin-left: 10px !important;
+  }
+}
+
+.form-p-description {
+  padding: 0px 9px;
+  color: #475161 !important;
+  font-size: 13px !important;
+}
+
+.launchInfo {
+  .InfoRowContent {
+    display: flex;
+    justify-content: space-between;
+    max-width: 46%;
+  }
+}
+
+.hoverIcon {
+  position: absolute;
+  top: 6px;
+  left: -5px;
+}
+
+.deployForm {
+  .pl-10 {
+    padding-left: 0rem;
+  }
+}
+
+.tippy-content {
+  .flex-v-center {
+    align-items: flex-start;
+  }
+}
+
+.closeContainer {
+  height: auto !important;
+  width: auto !important;
+}

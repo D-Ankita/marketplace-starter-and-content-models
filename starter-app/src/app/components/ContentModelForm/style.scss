@@ -1,0 +1,67 @@
+.RedAlertIcon {
+  height: 5rem !important;
+  margin: auto !important;
+}
+
+.StackNameField {
+  padding: 20px !important;
+}
+
+.ImportField {
+  padding: 10px 20px 20px !important;
+}
+
+.no-stacks,
+.no-stacks-content,
+.no-stacks > * {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.no-stacks-content {
+  padding: 1.5rem !important;
+}
+
+.no-stacks-content h3 {
+  margin: 1rem auto 0.5rem auto !important ;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 20px;
+  color: #475161;
+}
+
+.no-stacks-content p {
+  padding-bottom: 1rem !important ;
+  color: #475161;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.async-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.loader-text {
+  color: #475161;
+  font-weight: 400;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.img-loader {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 11%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}

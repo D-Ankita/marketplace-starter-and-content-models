@@ -1,0 +1,98 @@
+/** FIX: ECO-2761. Changes added due to upgrade to venus 1.4.3 */
+.starter-intro p, .image-card .description p {
+  color: #475161;
+  font-family: Inter;
+  font-size: .8125rem;
+}
+
+.starter-intro {
+  margin-top: -8px;
+}
+
+.vertical-steps li.disabled {
+  pointer-events: all;
+}
+/** END Fix */
+
+
+.wrapper {
+  background-color: #f7f9fc;
+
+  .header {
+    background: #ffffff;
+    display: flex;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10;
+    height: 3.5rem;
+    border-bottom: 1px solid #edf1f7;
+
+    .logo,
+    .pageTitle-container {
+      align-items: center;
+      display: flex;
+      width: min-content;
+      height: 3.5rem;
+      margin-left: 1rem;
+    }
+
+    .pageTitle-container {
+      width: fit-content;
+      margin-left: 20%;
+    }
+    .pageTitle {
+      margin-left: 0.4rem;
+    }
+
+    .title {
+      padding-right: calc(50vw - 21rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      h5 {
+        padding-left: 10px;
+        font-weight: 800;
+      }
+    }
+
+    .help {
+      padding-left: calc(50vw + 33rem);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+
+      svg {
+        height: 20px;
+        width: 20px;
+      }
+    }
+  }
+
+  .content {
+    max-width: 760px;
+    margin: 0 auto;
+    font-family: "Inter", sans-serif;
+  }
+
+  .PageLayout--primary .PageLayout__leftSidebar {
+    background-color: #fff !important;
+    width: 21.5rem !important;
+    left: 0 !important;
+    padding: 0 0.9375rem !important;
+    overflow-y: auto;
+  }
+
+  .PageLayout__body {
+    background-color: #f7f9fc !important;
+    margin-top: 55px !important;
+    height: calc(100vh - 56px) !important;
+    margin-left: 21.5rem !important;
+    width: calc(100% - 21.5rem) !important;
+    overflow-y: auto;
+  }
+}
