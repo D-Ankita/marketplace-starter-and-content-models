@@ -1,0 +1,59 @@
+format_version: 4
+pipelines:
+  ecosystem-starter-app-stag-lint-test-build:
+    group: ecosystem
+    label_template: ${git[:7]}
+    lock_behavior: none
+    display_order: 13
+    materials:
+      git:
+        git: git@github.com:contentstack/marketplace-starter-app
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+      - lint-test-build:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          secure_variables:
+            REACT_APP_DATADOG_RUM_APPLICATION_ID: AES:GIbHq62CokZNej3JKeURtQ==:Nk1gfQImIBLr4dcolZNTn5EbubjgAqanA+K3ehEKUS3vSCljGix8qZL7X4Go8kJs
+            REACT_APP_DATADOG_RUM_CLIENT_TOKEN: AES:sSTOMwA73rmV9YKlTrGAIg==:Ufr8mJeEbaICaq++q97gZ8B48QyxoHvBsYO3cuXZp8K+e7SPJhzmor4IXAT/pNSU
+            REACT_APP_DATADOG_RUM_SITE: AES:DeBZmLeSK5HVcR1r1s8KTQ==:++nAMpMB+1Xxo2/RIQU/jw==
+            REACT_APP_DATADOG_RUM_SERVICE: AES:001WRflf58myqMIpkkMwWA==:DaoXG8ARrfiha9PFYeMh5uxbGInLENeOhEGSTxvqUaw=
+            REACT_APP_HEAP_PROJECT_ID: AES:4eBlKzucYm/hr5bLQUKkCw==:8bD8aUXOjX6c7MD+K93Bbw==
+            REACT_APP_LAUNCH_SUPPORTED_STARTERS: AES:bOwQmqaOWRbPj1yYymXa1g==:E+frT3OyV68GoKgKZpuBAg==
+          jobs:
+            lint-test-build:
+              elastic_profile_id: stag-ecosystem-seeder-ui-build
+              timeout: 0
+              artifacts:
+                - build:
+                    source: starter-app/build
+              tasks:
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - echo //npm.pkg.github.com/:_authToken=$GITHUB_PERSONAL_ACCESS_TOKEN > .npmrc
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - echo "@contentstack:registry=https://npm.pkg.github.com/contentstack" >> .npmrc
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - install
+                    command: npm
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - run
+                      - build
+                    command: npm

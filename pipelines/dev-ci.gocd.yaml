@@ -1,0 +1,61 @@
+format_version: 4
+pipelines:
+  ecosystem-starter-app-dev-lint-test-build:
+    group: ecosystem
+    label_template: ${git[:7]}
+    lock_behavior: none
+    display_order: 11
+    materials:
+      git:
+        git: git@github.com:contentstack/marketplace-starter-app
+        shallow_clone: false
+        auto_update: true
+        branch: main
+    stages:
+      - lint-test-build:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          secure_variables:
+            REACT_APP_DATADOG_RUM_APPLICATION_ID: AES:CbG6gRuwHOJDSH8OnHM2Jw==:ClyIYU39tpyhXcx6buk2ORB4+kgfvy9utOAMlbkEuWKZS10rNPA88lfCam+OnnS6
+            REACT_APP_DATADOG_RUM_CLIENT_TOKEN: AES:Zy65ryYEvB3KdPqzhLeGqw==:JMdyrKDd00Copusqd929Ivr24UpgpMe8I8NFJ7i8Ns8bOLmtRsd5vMwDTC3B+Jeg
+            REACT_APP_DATADOG_RUM_SITE: AES:SwEqQamSQMZJBEiQ2q3ikw==:QfIFHwPYz1tZroE9Q8KTrA==
+            REACT_APP_DATADOG_RUM_SERVICE: AES:Uw8AgzwANzyW+L866aE2CQ==:bVQtY5EQR+CYrmr5oMQbUkPIdL/GmTbdv248hQ/5TN8=
+            REACT_APP_HEAP_PROJECT_ID: AES:NSfpsUfF7n27eLBq/4w2ig==:y+TDB3uJtPhf2xYRaVaJFA==
+            REACT_APP_LAUNCH_SUPPORTED_STARTERS: AES:p3yAG4YT4O8HWIgGg59HEQ==:/jF6QWsC5tjy/GPmG9Gaww==
+            REACT_APP_NODE_ENVIRONMENT: AES:GCfwCjKa0FDeLZELfhLuLw==:rQnNE9EXSUeElPB9fOtdmQ==
+            REACT_APP_HOST_URL: AES:Y1ZC+y16jyNCw4EOzy1a1A==:UJezIJolrsTVnAG1yhCHtWPNZIqGeYuJsYv1Sf5AIKw=
+          jobs:
+            lint-test-build:
+              elastic_profile_id: dev-ecosystem-seeder-ui-build
+              timeout: 0
+              artifacts:
+                - build:
+                    source: starter-app/build
+              tasks:
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - echo //npm.pkg.github.com/:_authToken=$GITHUB_PERSONAL_ACCESS_TOKEN > .npmrc
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - echo "@contentstack:registry=https://npm.pkg.github.com/contentstack" >> .npmrc
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - install
+                    command: npm
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - run
+                      - build
+                    command: npm

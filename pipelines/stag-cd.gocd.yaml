@@ -1,0 +1,125 @@
+format_version: 4
+pipelines:
+  ecosystem-starter-app-stag-deploy:
+    group: ecosystem
+    label_template: "${ecosystem-starter-app-build}"
+    lock_behavior: none
+    display_order: 14
+    parameters:
+      E2E_TESTS_REPO_URL: git@github.com:contentstack/marketplace-starter-app.git
+      E2E_TESTS_REPO_BRANCH: staging
+    materials:
+      ecosystem-starter-app-build:
+        pipeline: ecosystem-starter-app-stag-lint-test-build
+        stage: lint-test-build
+    stages:
+      - stag-deploy:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: yes
+          approval:
+            type: manual
+            allow_only_on_success: false
+          jobs:
+            stag-deploy:
+              elastic_profile_id: nonprod-ecosystem-aws-cli
+              timeout: 0
+              tasks:
+                - fetch:
+                    pipeline: ecosystem-starter-app-stag-lint-test-build
+                    stage: lint-test-build
+                    job: lint-test-build
+                    source: build/
+                    is_file: no
+                    destination: ./
+                - exec:
+                    arguments:
+                      - -c
+                      - aws s3 cp build s3://stag-ecosystem-starter-ui --recursive
+                    command: sh
+                - exec:
+                    arguments:
+                      - -c
+                      - aws cloudfront create-invalidation --distribution-id E1XWDKRRUMBAD8 --paths "/*"
+                    command: sh
+      - sanity:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: success
+            allow_only_on_success: false
+          secure_variables:
+            #Login URL
+            APP_HOST_URL: AES:ePvrt0/oWNQrPcoTYRcINQ==:K+ntUqSrl954foo0IWbNegdQ31kjjFz1sjMsVdCfDcY=
+            # basic auth credentials
+            BASIC_AUTH_USERNAME: AES:RIUdhzLzXmDXK0Cn3xtSdw==:u/r21V145oTtL/YvwvCCAw==
+            BASIC_AUTH_PASSWORD: AES:XKJJ++HzAIlAOxIFr8RpSw==:tQZzK/eNQ26j0DKU/DFljkYcYKsq/Gau7Ou5Wlm3OtQ=
+            #Organization
+            CONTENTSTACK_ORGANIZATION_UID: AES:+WVoJkL1YfSOwVs88QigHg==:f3taDYndSTgeiYW3vyK2G6yGlmE9DuvfgyVN+X+ec+8=
+            # Starter App Name
+            CONTENTSTACK_STARTER_APP: AES:rkbyd60XSG5bwSLQ7WvtsQ==:ZEHGAZJuYXLN/obLMRPpFg==
+            # Login
+            CONTENTSTACK_LOGIN: AES:1D3WhBykFk2fzx6bJn+kTQ==:7oOyH1/jTYaD826VZtqpqb5FxFKGCovP3UKhTfDXLYk=
+            CONTENTSTACK_PASSWORD: AES:rc/ZDuFxBfJWcwmZEm2n6g==:MPlAPHlP9et9SESteqM8AzqrPnnz579UVse+CVDuPrA=
+            # Github
+            GITHUB_LOGIN_ID: AES:3ggOKxYO50N6R2p7WBO0DA==:IfGiGm64pSXovlx/igZCr3xLe5eyDHKnqC2CefpfZ+A=
+            GITHUB_PASSWORD: AES:BlWCH3MgCymlTzPhndqCfg==:l8CqZhrwrUEI2H5lzg7SPk/x661Pqyq0OWqQQHDIBt8=
+            BASE_API_URL: AES:YcWKX2dRJDG82dOxGW5YdA==:kz7yYfz4cF6Ta9CFG821L+etqNMcO5OhymOsigc2FqU=
+            # 2FA Secret Key
+            SECRET_KEY: AES:FbMBhW9D/BJ0T2RqcMJUDg==:+M7FkKdYYrWuNrUe/Fh80n15V/kzlAspH7Kk0O5M6RY=
+            # Git repository owner and token
+            GIT_OWNER_NAME: AES:9qvrDDYfj5u4jHAC+HX+7A==:0OFHj81WiyY2pbtc7FK+ORFKh2uIOFDQ2qIVP6/E+XE=
+            GITHUB_TOKEN: AES:kd/41RwUeke7SACXr2PsVA==:m7WlFvh3D8+ulqx+oG05JDGOpRZklXnV5X3XHQ9ej5aCSqfY0pX0CGXQAuyKLhw8
+          jobs:
+            sanity:
+              elastic_profile_id: k8s-cicd-playwright
+              timeout: 0
+              artifacts:
+                - test:
+                    source: e2e-tests/starter-app/playwright-report
+                    destination: playwright-report
+              tabs:
+                Report: playwright-report/playwright-report/index.html
+              tasks:
+                - exec:
+                    arguments:
+                      - -c
+                      - "git clone --single-branch --branch #{E2E_TESTS_REPO_BRANCH} #{E2E_TESTS_REPO_URL} e2e-tests"
+                    command: sh
+                - exec:
+                    working_directory: e2e-tests/starter-app
+                    arguments:
+                      - -c
+                      - echo //npm.pkg.github.com/:_authToken=$GITHUB_PERSONAL_ACCESS_TOKEN > .npmrc
+                    command: sh
+                - exec:
+                    working_directory: e2e-tests/starter-app
+                    arguments:
+                      - -c
+                      - echo "@contentstack:registry=https://npm.pkg.github.com/contentstack" >> .npmrc
+                    command: sh
+                - exec:
+                    working_directory: e2e-tests/starter-app
+                    arguments:
+                      - -c
+                      - npm install --legacy-peer-deps
+                    command: sh
+                - exec:
+                    working_directory: e2e-tests/starter-app
+                    arguments:
+                      - -c
+                      - npm run test:chrome
+                    command: sh
+                - exec:
+                    working_directory: e2e-tests/starter-app
+                    arguments:
+                      - -c
+                      - npm run test:firefox
+                    command: sh
+                - exec:
+                    working_directory: e2e-tests/starter-app
+                    arguments:
+                      - -c
+                      - npm run test:safari
+                    command: sh

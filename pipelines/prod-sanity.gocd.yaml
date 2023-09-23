@@ -1,0 +1,91 @@
+format_version: 4
+pipelines:
+  ecosystem-starter-app-prod-sanity:
+    group: ecosystem
+    label_template: ${git[:7]}
+    lock_behavior: none
+    display_order: 17
+    materials:
+      git:
+        git: git@github.com:contentstack/marketplace-starter-app.git
+        lock_behavior: none
+        display_order: 28
+        branch: main
+    timer:
+      spec: "0 30 4 ? * MON *"
+    stages:
+      - sanity:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: false
+          approval:
+            type: manual
+            allow_only_on_success: false
+          secure_variables:
+            #Login URL
+            APP_HOST_URL: AES:IUkDswZSEu176PpU1bz0Iw==:9fAmm5sG0X1sg/WyamJdq2H+RBz6M46myNPp1EAX42I=
+            # basic auth credentials
+            BASIC_AUTH_USERNAME: AES:RIUdhzLzXmDXK0Cn3xtSdw==:u/r21V145oTtL/YvwvCCAw==
+            BASIC_AUTH_PASSWORD: AES:XKJJ++HzAIlAOxIFr8RpSw==:tQZzK/eNQ26j0DKU/DFljkYcYKsq/Gau7Ou5Wlm3OtQ=
+            #Organization
+            CONTENTSTACK_ORGANIZATION_UID: AES:2uQxzAWaqKTdfXyzqjNBjQ==:7YleeQa7XaEAVGHwGqG8RaAH7JWrrrd42q9Iuza73QQ=
+            # Starter App Name
+            CONTENTSTACK_STARTER_APP: AES:KwFWj1IF4Tw77qVMw7HyEA==:tiBB6s/1Qc/ObcL4YaxD9w==
+            # Login
+            CONTENTSTACK_LOGIN: AES:03KNiQ8lcCwmTz9TfL4QyA==:d9zYT70JmF0OnYVqGmC0qOAs3U+Y2N80VnhLfwVq5dk=
+            CONTENTSTACK_PASSWORD: AES:hB5r6e4TXZURf2wagIVRZw==:i+kqddFYWslnJs+iaSb+plhyWxd1r/RgNKK2yxdrsqg=
+            # Github
+            GITHUB_LOGIN_ID: AES:lBAOGIzNdDBrYOWLcJT/hA==:KcCtLS0x1A0PjeQ0UKnKG4kM7BaQihObS4bGC2I7VFA=
+            GITHUB_PASSWORD: AES:5NTn2AkCLQ0lE+rGn6ne2g==:tLFlmvdFu5WElKn4jgkSgtzFUV+vAGD2Cg0OSsZ2vl0=
+            BASE_API_URL: AES:hFuB8Jp13pkE1vYs5H7X4A==:kIt8PnlW85jVovi1EtqA+CgbSh/VVwjdanYZNqOpbmk=
+            # 2FA Secret Key
+            SECRET_KEY: AES:fDfrHPLuOt+UTs4YVq/3Gg==:hCrlhjcBrJ9DrEwY0NTvElnNRxwikhore1Pxc/lt4TY=
+            GIT_OWNER_NAME: AES:6h3bek6Yx546eEOZ5svrYQ==:SUeRZT/IoNY7F2+vlsODoZe8Ev6EtE/+SR73mzWhY0o=
+            GITHUB_TOKEN: AES:zw/XycU8nu92D42bqNNHpw==:Vq2xIW5ncr0+DAeuheBjiXfG47gRl6/Ujl97Y05rhIi+44CAkq1MvT4a9Tt4e1D6
+          jobs:
+            sanity:
+              elastic_profile_id: k8s-cicd-playwright
+              timeout: 0
+              artifacts:
+                - test:
+                    source: starter-app/playwright-report
+                    destination: playwright-report
+              tabs:
+                Report: playwright-report/playwright-report/index.html
+              tasks:
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - echo //npm.pkg.github.com/:_authToken=$GITHUB_PERSONAL_ACCESS_TOKEN > .npmrc
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - echo "@contentstack:registry=https://npm.pkg.github.com/contentstack" >> .npmrc
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - npm install --legacy-peer-deps
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - npm run test:chrome
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - npm run test:firefox
+                    command: sh
+                - exec:
+                    working_directory: starter-app
+                    arguments:
+                      - -c
+                      - npm run test:safari
+                    command: sh

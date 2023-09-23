@@ -1,0 +1,43 @@
+format_version: 4
+pipelines:
+  ecosystem-starter-app-prod-deploy:
+    group: ecosystem
+    label_template: "${ecosystem-starter-app-build}"
+    lock_behavior: none
+    display_order: 16
+    materials:
+      ecosystem-starter-app-build:
+        pipeline: ecosystem-starter-app-prod-lint-test-build
+        stage: lint-test-build
+    stages:
+      - prod-deploy:
+          fetch_materials: true
+          keep_artifacts: false
+          clean_workspace: yes
+          approval:
+            type: manual
+            roles:
+              - devops
+            allow_only_on_success: true
+          jobs:
+            prod-deploy:
+              elastic_profile_id: prod-ecosystem-aws-cli
+              timeout: 0
+              tasks:
+                - fetch:
+                    pipeline: ecosystem-starter-app-prod-lint-test-build
+                    stage: lint-test-build
+                    job: lint-test-build
+                    source: build/
+                    is_file: no
+                    destination: ./
+                - exec:
+                    arguments:
+                      - -c
+                      - aws s3 cp build s3://prod-ecosystem-starter-ui --recursive
+                    command: sh
+                - exec:
+                    arguments:
+                      - -c
+                      - aws cloudfront create-invalidation --distribution-id E2NRU9YDY5HGCI --paths "/*"
+                    command: sh
